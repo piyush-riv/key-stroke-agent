@@ -76,13 +76,18 @@ socket.onmessage = function (message) {
 
     updateUI(data);
 
-    if (
-        data.assistance_needed &&
-        data.suggestion
-    ) {
+    function cleanCoachResponse(text) {
+    return text
+        .replace(/^#{1,6}\s*/gm, "")
+        .replace(/\*\*(.*?)\*\*/g, "$1")
+        .replace(/\*(.*?)\*/g, "$1")
+        .replace(/^\s*[-*]\s+/gm, "• ")
+        .trim();
+    }
 
+    if (data.coach_response) {
         showSuggestion(
-            data.suggestion
+            cleanCoachResponse(data.coach_response)
         );
     }
 };

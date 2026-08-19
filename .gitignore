@@ -16,3 +16,10 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+keystroke/
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/

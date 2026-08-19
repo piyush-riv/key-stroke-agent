@@ -4,6 +4,7 @@ from app.EventModels.events import KeystrokeEvent
 from app.session.state import SessionState
 from app.agent.graph import keystroke_graph
 
+
 app = FastAPI()
 
 
@@ -24,7 +25,6 @@ async def websocket_endpoint(websocket: WebSocket):
 
     print("WebSocket connection accepted")
 
-    # Create one session state for this WebSocket connection
     state = SessionState(
         session_id="session_001"
     )
@@ -33,27 +33,25 @@ async def websocket_endpoint(websocket: WebSocket):
 
         while True:
 
-            # Receive JSON event from frontend
             data = await websocket.receive_json()
 
             print("Received:", data)
 
-            # Validate JSON using Pydantic
             event = KeystrokeEvent(**data)
 
-            # Run the complete LangGraph agent
             result = keystroke_graph.invoke({
                 "event": event,
-                "session_state": state
+                "session_state": state,
+                "retrieved_context": [],
+                "coach_response": ""
             })
 
-            # Get updated session state from graph
             state = result["session_state"]
 
-            # Send updated metrics back to frontend
-            await websocket.send_json(
-                state.model_dump()
-            )
+            await websocket.send_json({
+                **result["session_state"].model_dump(),
+                "coach_response": result.get("coach_response", "")
+            })
 
     except WebSocketDisconnect:
 

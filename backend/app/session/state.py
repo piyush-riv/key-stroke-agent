@@ -20,3 +20,5 @@ class SessionState(BaseModel):
 
     backspace_ratio: float = 0.0
     struggle_score: float = 0.0
+
+    last_coach_timestamp: float | None = None
