@@ -1,0 +1,4 @@
+Binary Search
+
+Binary search is an efficient searching algorithm.
+It works on sorted data by repeatedly dividing the search space into two halves.

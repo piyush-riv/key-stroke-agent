@@ -1,0 +1,6 @@
+{
+    "topic": "Binary Search",
+    "difficulty": "Easy",
+    "description": "Binary search works on sorted data by repeatedly dividing the search space into two halves.",
+    "language": "Java"
+}

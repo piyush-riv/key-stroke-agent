@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KeyStroke Agent</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #1e1e1e;
+            color: white;
+        }
+
+        .header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            background: #252526;
+            border-bottom: 1px solid #444;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .connection {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        #statusDot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #777;
+        }
+
+        .main {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        .editor-container {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #editor {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sidebar {
+            width: 300px;
+            background: #252526;
+            border-left: 1px solid #444;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .metric-value {
+            font-weight: bold;
+        }
+
+        .event-status {
+            margin-top: 20px;
+            padding: 10px;
+            background: #1e1e1e;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .suggestion-box {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #333333;
+            border-radius: 6px;
+            border: 1px solid #555;
+        }
+
+        .suggestion-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #suggestionText {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <div class="title">
+            KeyStroke Agent
+        </div>
+
+        <div class="connection">
+
+            <div id="statusDot"></div>
+
+            <span id="connectionStatus">
+                Connecting...
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="main">
+
+        <div class="editor-container">
+
+            <div id="editor"></div>
+
+        </div>
+
+
+        <div class="sidebar">
+
+            <div class="section-title">
+                Agent Metrics
+            </div>
+
+
+            <div class="metric">
+                <span>Keystrokes</span>
+                <span id="keystrokes" class="metric-value">0</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Backspaces</span>
+                <span id="backspaces" class="metric-value">0</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Deletes</span>
+                <span id="deletes" class="metric-value">0</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Inserted</span>
+                <span id="inserted" class="metric-value">0</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Deleted</span>
+                <span id="deleted" class="metric-value">0</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Latency</span>
+                <span id="latency" class="metric-value">--</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Pause</span>
+                <span id="pause" class="metric-value">No</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Backspace Ratio</span>
+                <span id="backspaceRatio" class="metric-value">0%</span>
+            </div>
+
+
+            <div class="metric">
+                <span>Struggle Score</span>
+                <span id="struggleScore" class="metric-value">0</span>
+            </div>
+
+
+            <div class="event-status">
+
+                <strong>Event:</strong>
+
+                <span id="eventStatus">
+                    Waiting...
+                </span>
+
+            </div>
+
+
+            <div id="suggestionBox" class="suggestion-box">
+
+                <div class="suggestion-title">
+                    💡 Suggestion
+                </div>
+
+                <div id="suggestionText">
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Monaco loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
+
+    <!-- Your application -->
+    <script src="app.js"></script>
+
+</body>
+
+</html>
